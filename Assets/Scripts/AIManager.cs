@@ -32,7 +32,7 @@ public class AIManager : MonoBehaviour
                         "Each entry includes the approximate size of the object (width x height x depth in Unity units). " +
                         "Each object should only contain 'name', 'category', 'x', 'y', and 'z' fields. No descriptions, colors, or emotions. " +
                         "Ensure the scene includes a large land object (e.g: terrain or flat ground) as the base where all other objects will be placed. This land should span the entire area and be suitable for supporting environmental features like trees, rocks, or buildings." +
-                        "You must also generate a MINIMUM of 10 objects.";
+                        "You must also generate a MINIMUM of 20 objects.";
 
         foreach (string folder in Directory.GetDirectories(basePath, "*", SearchOption.AllDirectories))
         {
@@ -156,11 +156,11 @@ public class AIManager : MonoBehaviour
             var manager = FindAnyObjectByType<TestManager>();
             if (manager == null)
             {
-                Debug.LogError("❌ TestManager not found in scene.");
+                Debug.LogError("TestManager not found in scene");
             }
             else
             {
-                Debug.Log("✅ TestManager found. Calling ShowEnvironmentView()");
+                Debug.Log("TestManager found, showing env");
                 manager.ShowEnvironmentView();
             }
 
