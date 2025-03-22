@@ -1805,8 +1805,14 @@ MonoBehaviour:
     balls, Size: 0.3 x 0.3 x 0.3) - ball yellow (Category: Environment/Winter environment/Christmas
     balls, Size: 0.3 x 0.3 x 0.3)- Garlands:  - garland 2 (Category: Environment/Winter
     environment/Garlands, Size: 6.9 x 3.1 x 0.2) - garland (Category: Environment/Winter
-    environment/Garlands, Size: 6.8 x 0.7 x 0.2)Do not invent new object names. Only
-    return JSON with prefab name and position fields: name, category, x, y, z. '
+    environment/Garlands, Size: 6.8 x 0.7 x 0.2)D. You must select exactly one prefab
+    from the ''Lands'' category to act as the base terrain. Place it at or near position
+    (0, 0, 0). This is required in every scene and must be the first object listed
+    in the generated output. Do not invent new object names. Only return JSON with
+    prefab/object name and position fields: name, category, x, y, z. On top of the
+    land, you must have at least 20 generated prefabs/objects. On top of the land,
+    you must have at least 20 generated prefabs/objects. Make sure that all of these
+    generated prefabs/objects are touching/slightly overlapping the land.'
 --- !u!114 &1656332495
 MonoBehaviour:
   m_ObjectHideFlags: 0
