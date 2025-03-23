@@ -5,8 +5,10 @@ public class EnvironmentLoader : MonoBehaviour
 {
     //Arraylist to store objects
     public List<ResolvedEnvironmentObject> loadedObjects = new List<ResolvedEnvironmentObject>();
+    private string currentJSONContent; 
 
     public void GenerateEnvironmentFromJson(string json_content) {
+        currentJSONContent = json_content;
         loadedObjects.Clear();
         EnvironmentDataWrapper data = JsonUtility.FromJson<EnvironmentDataWrapper>(json_content); //Load json_content from AIManager
 
@@ -28,6 +30,12 @@ public class EnvironmentLoader : MonoBehaviour
         }
         Debug.Log($"Loaded {data.objects.Length} objects into the env");
         FindAnyObjectByType<EnvironmentGenerator>()?.GenerateScene(loadedObjects);
+    }
+
+    public void RegenerateEnvironment() {
+        if (!string.IsNullOrEmpty(currentJSONContent)) {
+            GenerateEnvironmentFromJson(currentJSONContent);
+        }
     }
 
     public GameObject LoadPrefab(string category, string prefabName) {

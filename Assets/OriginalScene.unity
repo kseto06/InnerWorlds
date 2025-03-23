@@ -1661,13 +1661,14 @@ MonoBehaviour:
     Only use the following prefab names for the ''name'' field. Each entry includes
     the approximate size of the object (width x height x depth in Unity units). Each
     object should only contain ''name'', ''category'', ''x'', ''y'', and ''z'' fields.
-    No descriptions, colors, or emotions. - Animals:  - horse black (Category: Animals,
-    Size: 0.8 x 2.0 x 2.3) - horse brown (Category: Animals, Size: 0.8 x 2.0 x 2.3)
-    - horse silver (Category: Animals, Size: 0.8 x 2.0 x 2.3) - horse white (Category:
-    Animals, Size: 0.8 x 2.0 x 2.3)- Environment:  - barrel 2 (Category: Environment/Barrels,
-    Size: 0.8 x 0.9 x 0.8) - barrel (Category: Environment/Barrels, Size: 0.8 x 0.9
-    x 0.8) - bench 2 (Category: Environment/Benchs, Size: 1.7 x 0.9 x 0.8) - bench
-    (Category: Environment/Benchs, Size: 2.2 x 1.1 x 0.6) - box 2 (Category: Environment/Box,
+    No descriptions, colors, or emotions. You must also generate a MINIMUM of 20
+    objects.- Animals:  - horse black (Category: Animals, Size: 0.8 x 2.0 x 2.3)
+    - horse brown (Category: Animals, Size: 0.8 x 2.0 x 2.3) - horse silver (Category:
+    Animals, Size: 0.8 x 2.0 x 2.3) - horse white (Category: Animals, Size: 0.8 x
+    2.0 x 2.3)- Environment:  - barrel 2 (Category: Environment/Barrels, Size: 0.8
+    x 0.9 x 0.8) - barrel (Category: Environment/Barrels, Size: 0.8 x 0.9 x 0.8)
+    - bench 2 (Category: Environment/Benchs, Size: 1.7 x 0.9 x 0.8) - bench (Category:
+    Environment/Benchs, Size: 2.2 x 1.1 x 0.6) - box 2 (Category: Environment/Box,
     Size: 0.7 x 0.7 x 0.7) - box (Category: Environment/Box, Size: 0.7 x 0.7 x 0.7)
     - bonfire (Category: Environment/Camping environment, Size: 1.3 x 0.5 x 1.3)
     - camping tent blue (Category: Environment/Camping environment, Size: 4.7 x 2.6
@@ -1998,17 +1999,19 @@ MonoBehaviour:
     balls, Size: 0.3 x 0.3 x 0.3) - ball yellow (Category: Environment/Winter environment/Christmas
     balls, Size: 0.3 x 0.3 x 0.3)- Garlands:  - garland 2 (Category: Environment/Winter
     environment/Garlands, Size: 6.9 x 3.1 x 0.2) - garland (Category: Environment/Winter
-    environment/Garlands, Size: 6.8 x 0.7 x 0.2). . You must select exactly one prefab
-    from the ''Lands'' category to act as the base terrain. Place it at or near position
-    (0, 0, 0). This is required in every scene and must be the first object listed
-    in the generated output. Do not invent new object names. Only return JSON with
-    prefab name and position fields: name, category, x, y, z. On top of the land,
-    you must have at least 20 generated prefabs/objects. On top of the land, you
-    must have at least 20 generated prefabs/objects. Make sure that all of these
-    generated prefabs/objects are touching/slightly overlapping over the land --
-    that is, all prefabs/objects placed over the land should have an increased y
-    position value such that the objects sit just above the specific chosen land.'
-  outputText: {fileID: 1596810100}
+    environment/Garlands, Size: 6.8 x 0.7 x 0.2). You must select exactly one prefab
+    from the ''Lands'' category to act as the base terrain only if the user prompts
+    for snow/winter, desert, or water related domains. Place it at or near position
+    (x,y,z)=(0, 0, 0). This is required in every scene and must be the first object
+    listed in the generated output. Do not invent new object names. Only return JSON
+    with prefab name and position fields: name, category, x, y, z. If you use a land,
+    then you must have at least 20 generated prefabs/objects ON TOP of the land.
+    Make sure that all of these generated prefabs/objects lay WITHIN the width and
+    length dimensions of the land that you choose. Make sure that all of these generated
+    prefabs/objects are touching/slightly overlapping over the land -- that is, all
+    prefabs/objects placed over the land should have a increased y position value
+    such that the objects sit just above the specific chosen land. '
+  outputText: {fileID: 0}
 --- !u!114 &1656332495
 MonoBehaviour:
   m_ObjectHideFlags: 0
