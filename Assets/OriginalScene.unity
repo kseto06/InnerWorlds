@@ -2008,6 +2008,7 @@ MonoBehaviour:
     generated prefabs/objects are touching/slightly overlapping over the land --
     that is, all prefabs/objects placed over the land should have an increased y
     position value such that the objects sit just above the specific chosen land.'
+  outputText: {fileID: 1596810100}
 --- !u!114 &1656332495
 MonoBehaviour:
   m_ObjectHideFlags: 0

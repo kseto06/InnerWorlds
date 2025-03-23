@@ -9,7 +9,7 @@ using UnityEditor;
 using System.IO;
 using System.Linq;
 #endif
-
+using TMPro;
 public class AIManager : MonoBehaviour
 {
     public string openAIApiKey;
@@ -17,6 +17,7 @@ public class AIManager : MonoBehaviour
 
     [TextArea(4, 12)]
     public string systemPrompt = "";
+    public TMP_Text outputText;
 
 #if UNITY_EDITOR
     [ContextMenu("Generate System Prompt from Prefabs")]
@@ -148,28 +149,34 @@ public class AIManager : MonoBehaviour
             Debug.Log("GPT Response:\n" + response);
             json_content = ExtractStructuredScene(response);
 
-            // Store the data for the env scene:
-            PlayerPrefs.SetString("env_json", json_content);
-
-            //Load objects into the new Environment
-            var manager = FindAnyObjectByType<TestManager>();
-            if (manager == null)
+            // Only proceed if we have valid JSON content
+            if (json_content != null)
             {
-                Debug.LogError("TestManager not found in scene");
-            }
-            else
-            {
-                Debug.Log("TestManager found, showing env");
-                manager.ShowEnvironmentView();
-            }
+                // Store the data for the env scene:
+                PlayerPrefs.SetString("env_json", json_content);
 
-            FindAnyObjectByType<EnvironmentLoader>()?.GenerateEnvironmentFromJson(json_content);
-            DisappearingPlatform platform = FindObjectOfType<DisappearingPlatform>();
-            if (platform != null) {
-                platform.StartDisappearance();
-            }
+                //Load objects into the new Environment
+                var manager = FindAnyObjectByType<TestManager>();
+                if (manager == null)
+                {
+                    Debug.LogError("TestManager not found in scene");
+                }
+                else
+                {
+                    Debug.Log("TestManager found, showing env");
+                    manager.ShowEnvironmentView();
+                }
 
-            callback?.Invoke(json_content);
+                FindAnyObjectByType<EnvironmentLoader>()?.GenerateEnvironmentFromJson(json_content);
+                DisappearingPlatform platform = FindObjectOfType<DisappearingPlatform>();
+                if (platform != null) {
+                    platform.StartDisappearance();
+                }
+
+                callback?.Invoke(json_content);
+            } else {
+                outputText.text = "Please try again with a different prompt!";
+            }
         }
         else
         {
@@ -186,8 +193,30 @@ public class AIManager : MonoBehaviour
 
     private string ExtractStructuredScene(string response)
     {
-        var parsed = JsonUtility.FromJson<OpenAIResponseWrapper>(response);
-        return parsed.choices[0].message.tool_calls[0].function.arguments;
+        try
+        {
+            var parsed = JsonUtility.FromJson<OpenAIResponseWrapper>(response);
+            
+            // Check if the parsed object and its required properties exist
+            if (parsed == null || 
+                parsed.choices == null || 
+                parsed.choices.Length == 0 ||
+                parsed.choices[0].message == null ||
+                parsed.choices[0].message.tool_calls == null ||
+                parsed.choices[0].message.tool_calls.Length == 0 ||
+                parsed.choices[0].message.tool_calls[0].function == null)
+            {
+                Debug.LogError("Invalid response structure from OpenAI API");
+                return null;
+            }
+
+            return parsed.choices[0].message.tool_calls[0].function.arguments;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to parse OpenAI response: {ex.Message}\nResponse: {response}");
+            return null;
+        }
     }
 
     [Serializable]
