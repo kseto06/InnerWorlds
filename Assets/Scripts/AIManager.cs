@@ -22,7 +22,7 @@ public class AIManager : MonoBehaviour
     [ContextMenu("Generate System Prompt from Prefabs")]
     public void GenerateSystemPromptFromPrefabs()
     {
-        string basePath = "Assets/Palmov Island/Low Poly Atmospheric Locations Pack/Prefabs";
+        string basePath = "Assets/Resources/Palmov Island/Low Poly Atmospheric Locations Pack/Prefabs";
         var categories = new Dictionary<string, List<string>>();
 
         // Construct text prompts
@@ -31,7 +31,6 @@ public class AIManager : MonoBehaviour
                         "IMPORTANT: Only use the following prefab names for the 'name' field. " +
                         "Each entry includes the approximate size of the object (width x height x depth in Unity units). " +
                         "Each object should only contain 'name', 'category', 'x', 'y', and 'z' fields. No descriptions, colors, or emotions. " +
-                        "Ensure the scene includes a large land object (e.g: terrain or flat ground) as the base where all other objects will be placed. This land should span the entire area and be suitable for supporting environmental features like trees, rocks, or buildings." +
                         "You must also generate a MINIMUM of 20 objects.";
 
         foreach (string folder in Directory.GetDirectories(basePath, "*", SearchOption.AllDirectories))
@@ -67,7 +66,7 @@ public class AIManager : MonoBehaviour
             }
         }
 
-        prompt += "Do not invent new object names. Only return JSON with prefab name and position fields: name, category, x, y, z. ";
+        prompt += ". You must select exactly one prefab from the 'Lands' category to act as the base terrain. Place it at or near position (0, 0, 0). This is required in every scene and must be the first object listed in the generated output. Do not invent new object names. Only return JSON with prefab name and position fields: name, category, x, y, z. On top of the land, you must have at least 20 generated prefabs/objects. On top of the land, you must have at least 20 generated prefabs/objects. Make sure that all of these generated prefabs/objects are touching/slightly overlapping the land.";
         systemPrompt = prompt;
         Debug.Log("System prompt generated");
     }
@@ -94,7 +93,7 @@ public class AIManager : MonoBehaviour
         string endpoint = "https://api.openai.com/v1/chat/completions";
         string json =
             "{\n" +
-            "  \"model\": \"gpt-3.5-turbo-1106\",\n" +
+            "  \"model\": \"gpt-4-1106-preview\",\n" +
             "  \"messages\": [\n" +
             "    { \"role\": \"system\", \"content\": \"" + EscapeJson(systemPrompt) + "\" },\n" +
             "    { \"role\": \"user\", \"content\": \"" + EscapeJson(userPrompt) + "\" }\n" +
