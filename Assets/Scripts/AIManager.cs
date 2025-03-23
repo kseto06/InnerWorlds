@@ -66,7 +66,7 @@ public class AIManager : MonoBehaviour
             }
         }
 
-        prompt += ". You must select exactly one prefab from the 'Lands' category to act as the base terrain. Place it at or near position (0, 0, 0). This is required in every scene and must be the first object listed in the generated output. Do not invent new object names. Only return JSON with prefab name and position fields: name, category, x, y, z. On top of the land, you must have at least 20 generated prefabs/objects. On top of the land, you must have at least 20 generated prefabs/objects. Make sure that all of these generated prefabs/objects are touching/slightly overlapping over the land -- that is, all prefabs/objects placed over the land should have an increased y position value where the value is the y position plus height of the chosen land.";
+        prompt += ". You must select exactly one prefab from the 'Lands' category to act as the base terrain. Place it at or near position (0, 0, 0). This is required in every scene and must be the first object listed in the generated output. Do not invent new object names. Only return JSON with prefab name and position fields: name, category, x, y, z. On top of the land, you must have at least 20 generated prefabs/objects. On top of the land, you must have at least 20 generated prefabs/objects. Make sure that all of these generated prefabs/objects are touching/slightly overlapping over the land -- that is, all prefabs/objects placed over the land should have an increased y position value such that the objects sit above the specific chosen land.";
         systemPrompt = prompt;
         Debug.Log("System prompt generated");
     }
@@ -164,6 +164,10 @@ public class AIManager : MonoBehaviour
             }
 
             FindAnyObjectByType<EnvironmentLoader>()?.GenerateEnvironmentFromJson(json_content);
+            DisappearingPlatform platform = FindObjectOfType<DisappearingPlatform>();
+            if (platform != null) {
+                platform.StartDisappearance();
+            }
 
             callback?.Invoke(json_content);
         }
@@ -172,7 +176,6 @@ public class AIManager : MonoBehaviour
             string errorBody = request.downloadHandler.text;
             Debug.LogError("Full Error Body:\n" + request.downloadHandler.text);
             Debug.LogError("Raw JSON Sent:\n" + json);
-
         }
     }
 
