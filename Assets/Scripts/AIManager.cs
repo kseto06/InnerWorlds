@@ -67,7 +67,7 @@ public class AIManager : MonoBehaviour
             }
         }
 
-        prompt += ". You must select exactly one prefab from the 'Lands' category to act as the base terrain. Place it at or near position (0, 0, 0). This is required in every scene and must be the first object listed in the generated output. Do not invent new object names. Only return JSON with prefab name and position fields: name, category, x, y, z. On top of the land, you must have at least 20 generated prefabs/objects. On top of the land, you must have at least 20 generated prefabs/objects. Make sure that all of these generated prefabs/objects are touching/slightly overlapping over the land -- that is, all prefabs/objects placed over the land should have an increased y position value such that the objects sit above the specific chosen land.";
+        prompt += ". You must select exactly one prefab from the 'Lands' category to act as the base terrain only if the user prompts for snow/winter, desert, or water related domains. Place it at or near position (x,y,z)=(0, 0, 0). This is required in every scene and must be the first object listed in the generated output. Do not invent new object names. Only return JSON with prefab name and position fields: name, category, x, y, z. You must have at least 20 generated prefabs/objects. If you are using a land design, ensure that you have at least 20 generated prefabs/objects placed ON TOP of the land. Make sure that all of these generated prefabs/objects lay WITHIN the width and length dimensions of the land that you choose. Make sure that all of these generated prefabs/objects are touching/slightly overlapping over the land -- that is, all prefabs/objects placed over the land should have a increased y position value such that the objects sit just above the specific chosen land.";
         systemPrompt = prompt;
         Debug.Log("System prompt generated");
     }
@@ -185,7 +185,7 @@ public class AIManager : MonoBehaviour
             Debug.LogError("Raw JSON Sent:\n" + json);
         }
     }
-
+    
     private string EscapeJson(string str)
     {
         return str.Replace("\\", "\\\\").Replace("\"", "\\\"");
