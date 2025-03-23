@@ -14,7 +14,7 @@ public class ChatGPTTester : MonoBehaviour
         sendButton.onClick.AddListener(() =>
         {
             string prompt = promptInput.text;
-            outputText.text = "Sending...";
+            outputText.text = "Loading...";
             StartCoroutine(aiManager.GetSceneData(prompt, (response) =>
             {
                 outputText.text = "Response:\n" + response;
